@@ -15,9 +15,9 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenuBar>
-#include <QtWidgets/QStatusBar>
-#include <QtWidgets/QToolBar>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -25,28 +25,44 @@ QT_BEGIN_NAMESPACE
 class Ui_LoginInAppWindow
 {
 public:
-    QMenuBar *menuBar;
-    QToolBar *mainToolBar;
     QWidget *centralWidget;
-    QStatusBar *statusBar;
+    QWidget *verticalLayoutWidget;
+    QVBoxLayout *verticalLayout_2;
+    QPushButton *loginButton;
+    QSpacerItem *horizontalSpacer;
+    QPushButton *createButton;
 
     void setupUi(QMainWindow *LoginInAppWindow)
     {
         if (LoginInAppWindow->objectName().isEmpty())
             LoginInAppWindow->setObjectName(QStringLiteral("LoginInAppWindow"));
-        LoginInAppWindow->resize(400, 300);
-        menuBar = new QMenuBar(LoginInAppWindow);
-        menuBar->setObjectName(QStringLiteral("menuBar"));
-        LoginInAppWindow->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(LoginInAppWindow);
-        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        LoginInAppWindow->addToolBar(mainToolBar);
+        LoginInAppWindow->resize(360, 176);
         centralWidget = new QWidget(LoginInAppWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        verticalLayoutWidget = new QWidget(centralWidget);
+        verticalLayoutWidget->setObjectName(QStringLiteral("verticalLayoutWidget"));
+        verticalLayoutWidget->setGeometry(QRect(40, 40, 281, 91));
+        verticalLayout_2 = new QVBoxLayout(verticalLayoutWidget);
+        verticalLayout_2->setSpacing(6);
+        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
+        loginButton = new QPushButton(verticalLayoutWidget);
+        loginButton->setObjectName(QStringLiteral("loginButton"));
+        loginButton->setMaximumSize(QSize(16777215, 23));
+
+        verticalLayout_2->addWidget(loginButton);
+
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        verticalLayout_2->addItem(horizontalSpacer);
+
+        createButton = new QPushButton(verticalLayoutWidget);
+        createButton->setObjectName(QStringLiteral("createButton"));
+
+        verticalLayout_2->addWidget(createButton);
+
         LoginInAppWindow->setCentralWidget(centralWidget);
-        statusBar = new QStatusBar(LoginInAppWindow);
-        statusBar->setObjectName(QStringLiteral("statusBar"));
-        LoginInAppWindow->setStatusBar(statusBar);
 
         retranslateUi(LoginInAppWindow);
 
@@ -56,6 +72,8 @@ public:
     void retranslateUi(QMainWindow *LoginInAppWindow)
     {
         LoginInAppWindow->setWindowTitle(QApplication::translate("LoginInAppWindow", "LoginInAppWindow", nullptr));
+        loginButton->setText(QApplication::translate("LoginInAppWindow", "\320\222\320\276\320\271\321\202\320\270 \320\262 \321\201\320\262\320\276\320\265 \321\205\321\200\320\260\320\275\320\270\320\273\320\270\321\211\320\265 \320\277\320\260\321\200\320\276\320\273\320\265\320\271", nullptr));
+        createButton->setText(QApplication::translate("LoginInAppWindow", "\320\241\320\276\320\267\320\264\320\260\321\202\321\214 \320\275\320\276\320\262\320\276\320\265 \321\205\321\200\320\260\320\275\320\270\320\273\320\270\321\211\320\265 \320\277\320\260\321\200\320\276\320\273\320\265\320\271", nullptr));
     } // retranslateUi
 
 };
