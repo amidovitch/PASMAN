@@ -20,7 +20,7 @@ void LoginInAppWindow::on_loginButton_clicked()
     this->hide();
     if(logWindow.exec() == QDialog::Accepted){
         window.show();
-        //window.addInformauionInTable();
+        window.addInformauionInTable();
         this->close();
     }
     else this->show();
@@ -32,7 +32,7 @@ void LoginInAppWindow::on_createButton_clicked()
     this->hide();
     if(createWindow.exec() == QDialog::Accepted){
         window.show();
-        //window.addInformauionInTable();
+        window.addInformauionInTable();
         this->close();
     }
     else this->show();
