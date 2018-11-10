@@ -16,8 +16,8 @@ LogToStorageDialog::~LogToStorageDialog()
 
 void LogToStorageDialog::on_createButton_clicked()
 {
-    if(ui->masterLine->text() == WorkWithStorage::readMasterFromFile()){
-         this->close();
+    if(ui->masterLine->text() == WorkWithStorage::readMasterFromFile() && !(ui->masterLine->text().isEmpty())){
+         this->accept();
     }
     else{
         QMessageBox::critical(this,"Error", "Пароль введен неверно!");

@@ -17,16 +17,23 @@ LoginInAppWindow::~LoginInAppWindow()
 void LoginInAppWindow::on_loginButton_clicked()
 {
     LogToStorageDialog  logWindow;
-    logWindow.exec();
-    window.show();
-    //window.addInformauionInTable();
-    this->close();
+    this->hide();
+    if(logWindow.exec() == QDialog::Accepted){
+        window.show();
+        //window.addInformauionInTable();
+        this->close();
+    }
+    else this->show();
 }
 
 void LoginInAppWindow::on_createButton_clicked()
 {
     CreateStorageDialog createWindow;
-    createWindow.exec();
-    window.show();
-    this->close();
+    this->hide();
+    if(createWindow.exec() == QDialog::Accepted){
+        window.show();
+        //window.addInformauionInTable();
+        this->close();
+    }
+    else this->show();
 }
