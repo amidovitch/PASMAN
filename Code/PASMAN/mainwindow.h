@@ -19,7 +19,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    void addInformauionInTable();
+    void addInformationInTable();
 
 private slots:
     void on_deleteButton_clicked();

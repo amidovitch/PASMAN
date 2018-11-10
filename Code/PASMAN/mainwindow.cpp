@@ -15,7 +15,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::addInformauionInTable(){
+void MainWindow::addInformationInTable(){
 
     ui->tablePasswords->setRowCount(0);// очищаем таблицу, чтобы по новой в нее записывать
     WorkWithStorage::currentPossition = WorkWithStorage::startPossition;
@@ -51,19 +51,37 @@ void MainWindow::addInformauionInTable(){
 
 void MainWindow::on_deleteButton_clicked()
 {
+    if(ui->tablePasswords->selectedItems().isEmpty()) return;
+    ui->tablePasswords->removeRow(ui->tablePasswords->currentRow());
 
+    QString master = WorkWithStorage::readMasterFromFile();
+    QFile(WorkWithStorage::passwordsFileName).remove();
+    WorkWithStorage::writeMasterToFile(master);
+
+    QString login, password, description;
+
+    for (int i = 0; i <  ui->tablePasswords->rowCount(); i++) {
+        login = ui->tablePasswords->item(i,0)->text();
+        password = ui->tablePasswords->item(i,1)->text();
+        description = ui->tablePasswords->item(i,2)->text();
+        WorkWithStorage::writeDataToFile(login, password, description);
+    }
 }
 
 void MainWindow::on_autoButton_clicked()
 {
-
+    QString password, login;
+    if(ui->tablePasswords->selectedItems().isEmpty()) return;
+    password = ui->tablePasswords->selectedItems().at(1)->data(8).toString();
+    login = ui->tablePasswords->selectedItems().at(0)->text();
+    WorkWithWinApi::autoAuthorization(password, login);
 }
 
 void MainWindow::on_addPassword_triggered()
 {
     AddPassDialog addWindow;
     addWindow.exec();
-    this->addInformauionInTable();
+    this->addInformationInTable();
 }
 
 void MainWindow::on_generatePassword_triggered()
@@ -74,5 +92,5 @@ void MainWindow::on_generatePassword_triggered()
 
 void MainWindow::on_exit_triggered()
 {
-
+      this->close();
 }
