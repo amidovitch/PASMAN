@@ -32,7 +32,6 @@ void LoginInAppWindow::on_createButton_clicked()
     this->hide();
     if(createWindow.exec() == QDialog::Accepted){
         window.show();
-        window.addInformationInTable();
         this->close();
     }
     else this->show();

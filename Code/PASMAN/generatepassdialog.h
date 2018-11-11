@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QMessageBox>
 #include "QTime"
+#include "workwithwinapi.h"
 
 namespace Ui {
 class GeneratePassDialog;

@@ -1,9 +1,5 @@
 #include "workwithwinapi.h"
 
-WorkWithWinApi::WorkWithWinApi()
-{
-
-}
 void WorkWithWinApi::mySetClipboardData(QString data){
 
     if (OpenClipboard(NULL))//открываем буфер обмена

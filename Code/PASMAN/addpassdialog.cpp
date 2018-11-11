@@ -7,6 +7,7 @@ AddPassDialog::AddPassDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("PASMAN");
+    this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
 }
 
 AddPassDialog::~AddPassDialog()
@@ -18,11 +19,11 @@ void AddPassDialog::on_addButton_clicked()
 {
     if(ui->login->text().isEmpty() || ui->login->text().size() != ui->login->text().toUtf8().size()){
         ui->login->setText("");
-        QMessageBox::critical(this,"Error", "Логин введен некорректно.");
+        QMessageBox::warning(this," ", "Этот логин не подходит.");
     }
     if(ui->password->text().isEmpty() || ui->password->text().size() != ui->password->text().toUtf8().size()){
         ui->password->setText("");
-        QMessageBox::critical(this,"Error", "Пароль введен некорректно.");
+        QMessageBox::warning(this," ", "Этот пароль не подходит.");
     }
     else{
         if(WorkWithStorage::writeDataToFile(ui->login->text(), ui->password->text(),ui->note->text())){
@@ -30,9 +31,6 @@ void AddPassDialog::on_addButton_clicked()
             this->close();
         }
         else
-            QMessageBox::warning(this, "Error", "Произошла ошибка записи. Повторите еще раз.");
-            ui->login->setText("");
-            ui->password->setText("");
-            ui->note->setText("");
+            QMessageBox::critical(this, "Error", "Произошла ошибка записи. Повторите еще раз.");
     }
 }

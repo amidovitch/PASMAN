@@ -6,7 +6,6 @@
 class WorkWithWinApi
 {
 public:
-    WorkWithWinApi();
     static void mySetClipboardData(QString);
     static void autoAuthorization(QString, QString);
 };

@@ -1,9 +1,5 @@
 #include "cryptographer.h"
 #include <QMessageBox>
-Cryptographer::Cryptographer()
-{
-
-}
 
 QString Cryptographer::stringEncrypt(QString strInput, QString strPassword){
 

@@ -5,7 +5,6 @@
 class Cryptographer
 {
 public:
-    Cryptographer();
     static QString stringEncrypt(QString, QString);
     static QString stringDecrypt(QString, QString);
 };

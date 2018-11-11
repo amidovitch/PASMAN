@@ -58,7 +58,7 @@ public:
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        horizontalSpacer = new QSpacerItem(100, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
+        horizontalSpacer = new QSpacerItem(25, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer);
 
@@ -68,7 +68,7 @@ public:
 
         horizontalLayout->addWidget(passLine);
 
-        horizontalSpacer_2 = new QSpacerItem(100, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
+        horizontalSpacer_2 = new QSpacerItem(25, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer_2);
 
@@ -156,11 +156,11 @@ public:
     void retranslateUi(QDialog *GeneratePassDialog)
     {
         GeneratePassDialog->setWindowTitle(QApplication::translate("GeneratePassDialog", "Dialog", nullptr));
-        passLine->setText(QApplication::translate("GeneratePassDialog", "\320\227\320\264\320\265\321\201\321\214 \320\277\320\276\321\217\320\262\320\270\321\202\321\201\321\217 \320\277\320\260\321\200\320\276\320\273\321\214", nullptr));
+        passLine->setText(QApplication::translate("GeneratePassDialog", "\320\237\320\260\321\200\320\276\320\273\321\214 \320\277\320\276\321\217\320\262\320\270\321\202\321\201\321\217 \320\267\320\264\320\265\321\201\321\214 \320\270 \320\261\321\203\320\264\320\265\321\202 \320\277\320\276\320\274\320\265\321\211\320\265\320\275 \320\262 \320\261\321\203\321\204\320\265\321\200 \320\276\320\261\320\274\320\265\320\275\320\260", nullptr));
         uppercase->setText(QApplication::translate("GeneratePassDialog", "\320\237\321\200\320\276\320\277\320\270\321\201\320\275\321\213\320\265 \320\261\321\203\320\272\320\262\321\213 (A-Z)", nullptr));
         spaces->setText(QApplication::translate("GeneratePassDialog", "\320\237\321\200\320\276\320\261\320\265\320\273\321\213", nullptr));
         lowercase->setText(QApplication::translate("GeneratePassDialog", "\320\241\321\202\321\200\320\276\321\207\320\275\321\213\320\265 \320\261\321\203\320\272\320\262\321\213 (a-z)", nullptr));
-        special->setText(QApplication::translate("GeneratePassDialog", "\320\241\320\277\320\265\321\206\320\270\320\260\320\273\321\214\320\275\321\213\320\265 \321\201\320\270\320\274\320\262\320\276\320\273\321\213 (!/+.)()", nullptr));
+        special->setText(QApplication::translate("GeneratePassDialog", "\320\241\320\277\320\265\321\206\320\270\320\260\320\273\321\214\320\275\321\213\320\265 \321\201\320\270\320\274\320\262\320\276\320\273\321\213 (!/+.*)", nullptr));
         digits->setText(QApplication::translate("GeneratePassDialog", "\320\246\320\270\321\204\321\200\321\213 (0-9)", nullptr));
         label->setText(QApplication::translate("GeneratePassDialog", "\320\224\320\273\320\270\320\275\320\260:", nullptr));
         generateButton->setText(QApplication::translate("GeneratePassDialog", "\320\237\321\200\320\270\320\264\321\203\320\274\320\260\321\202\321\214", nullptr));

@@ -7,6 +7,7 @@ LogToStorageDialog::LogToStorageDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("PASMAN");
+    this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
 }
 
 LogToStorageDialog::~LogToStorageDialog()
@@ -27,6 +28,8 @@ void LogToStorageDialog::on_createButton_clicked()
 
 void LogToStorageDialog::on_masterLine_cursorPositionChanged(int arg1, int arg2)
 {
-    if(ui->masterLine->text() == "Введите свой мастер пароль")
+    if(ui->masterLine->text().startsWith("Введите свой мастер пароль")){
         ui->masterLine->clear();
+        ui->masterLine->setEchoMode(QLineEdit::Password);
+    }
 }

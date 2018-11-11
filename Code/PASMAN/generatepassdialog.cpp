@@ -8,6 +8,7 @@ GeneratePassDialog::GeneratePassDialog(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowTitle("PASMAN");
     ui->passLine->setEnabled(false);
+    this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
 }
 
 GeneratePassDialog::~GeneratePassDialog()
@@ -29,15 +30,15 @@ bool isDec(QString str)
 
 void GeneratePassDialog::on_generateButton_clicked()
 {
-    if(ui->lengthLine->text().isEmpty() || !(isDec(ui->lengthLine->text())) ||
-      (!ui->digits->isChecked()) && !ui->spaces->isChecked()&&!ui->uppercase->isChecked()
-      && !ui->lowercase->isChecked() && !ui->special->isChecked())
-            QMessageBox::critical(this, "Error", "Характеристики пароля выбраны неверно.");
+    bool ok = true;
+    if(ui->lengthLine->text().isEmpty() || !(isDec(ui->lengthLine->text())) || ((!ui->digits->isChecked())
+      && !ui->spaces->isChecked()&&!ui->uppercase->isChecked() && !ui->lowercase->isChecked() &&
+      !ui->special->isChecked()) || ui->lengthLine->text().toInt(&ok, 10)>40 || ui->lengthLine->text().toInt(&ok,10)<1)
+            QMessageBox::warning(this, " ", "Введите длину от 1 до 40 и выберите необходимые опции.");
 
     QTime midnight(0,0,0);
     qsrand(midnight.secsTo(QTime::currentTime()));
     QString pass;
-    bool ok = true;
 
     for(int i = 0; i <ui->lengthLine->text().toInt(&ok, 10); i++){
         switch(qrand() % 5)
@@ -75,4 +76,5 @@ void GeneratePassDialog::on_generateButton_clicked()
         }
     }
     ui->passLine->setText(pass);
+    WorkWithWinApi::mySetClipboardData(pass);
 }

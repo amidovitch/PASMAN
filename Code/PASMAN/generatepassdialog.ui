@@ -26,7 +26,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>100</width>
+         <width>25</width>
          <height>20</height>
         </size>
        </property>
@@ -35,7 +35,7 @@
      <item>
       <widget class="QLineEdit" name="passLine">
        <property name="text">
-        <string>Здесь появится пароль</string>
+        <string>Пароль появится здесь и будет помещен в буфер обмена</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -52,7 +52,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>100</width>
+         <width>25</width>
          <height>20</height>
         </size>
        </property>
@@ -90,7 +90,7 @@
      <item>
       <widget class="QCheckBox" name="special">
        <property name="text">
-        <string>Специальные символы (!/+.)()</string>
+        <string>Специальные символы (!/+.*)</string>
        </property>
       </widget>
      </item>
