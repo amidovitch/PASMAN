@@ -8,6 +8,7 @@ AddPassDialog::AddPassDialog(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowTitle("PASMAN");
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    this->setFixedSize(this->size());
 }
 
 AddPassDialog::~AddPassDialog()

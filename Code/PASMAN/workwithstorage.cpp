@@ -1,6 +1,6 @@
 #include "workwithstorage.h"
 
-char* WorkWithStorage::passwordsFileName = "passwords.txt";
+char* WorkWithStorage::passwordsFileName = "pass.txt";
 
 qint64 WorkWithStorage::currentPossition = 0;
 qint64 WorkWithStorage::startPossition = 0;

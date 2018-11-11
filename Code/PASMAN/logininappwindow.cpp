@@ -7,6 +7,7 @@ LoginInAppWindow::LoginInAppWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("PASMAN");
+    this->setFixedSize(this->size());
 }
 
 LoginInAppWindow::~LoginInAppWindow()

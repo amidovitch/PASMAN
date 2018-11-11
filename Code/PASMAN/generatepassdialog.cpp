@@ -9,6 +9,7 @@ GeneratePassDialog::GeneratePassDialog(QWidget *parent) :
     this->setWindowTitle("PASMAN");
     ui->passLine->setEnabled(false);
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    this->setFixedSize(this->size());
 }
 
 GeneratePassDialog::~GeneratePassDialog()
@@ -34,8 +35,10 @@ void GeneratePassDialog::on_generateButton_clicked()
     if(ui->lengthLine->text().isEmpty() || !(isDec(ui->lengthLine->text())) || ((!ui->digits->isChecked())
       && !ui->spaces->isChecked()&&!ui->uppercase->isChecked() && !ui->lowercase->isChecked() &&
       !ui->special->isChecked()) || ui->lengthLine->text().toInt(&ok, 10)>40 || ui->lengthLine->text().toInt(&ok,10)<1)
-            QMessageBox::warning(this, " ", "Введите длину от 1 до 40 и выберите необходимые опции.");
-
+    {
+            QMessageBox::warning(this, " ", "Введите длину от 1 до 40, и выберите необходимые опции.");
+            return;
+    }
     QTime midnight(0,0,0);
     qsrand(midnight.secsTo(QTime::currentTime()));
     QString pass;

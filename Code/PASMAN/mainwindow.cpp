@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowTitle("PASMAN");
     this->setFixedSize(530, 357);
+    ui->tablePasswords->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
 }
 
 MainWindow::~MainWindow()

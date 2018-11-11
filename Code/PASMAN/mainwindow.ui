@@ -20,6 +20,12 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QTableWidget" name="tablePasswords">
+      <property name="autoScroll">
+       <bool>true</bool>
+      </property>
+      <attribute name="horizontalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
       <attribute name="horizontalHeaderDefaultSectionSize">
        <number>170</number>
       </attribute>
