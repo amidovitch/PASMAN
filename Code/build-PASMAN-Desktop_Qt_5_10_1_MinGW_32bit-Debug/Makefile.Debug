@@ -17,13 +17,13 @@ CXXFLAGS      = -fno-keep-inline-dllexport -g -std=gnu++11 -Wall -W -Wextra -fex
 INCPATH       = -I..\PASMAN -I. -ID:\QT\5.10.1\mingw53_32\include -ID:\QT\5.10.1\mingw53_32\include\QtWidgets -ID:\QT\5.10.1\mingw53_32\include\QtGui -ID:\QT\5.10.1\mingw53_32\include\QtANGLE -ID:\QT\5.10.1\mingw53_32\include\QtCore -Idebug -I. -ID:\QT\5.10.1\mingw53_32\mkspecs\win32-g++ 
 LINKER      =        g++
 LFLAGS        =        -Wl,-subsystem,windows -mthreads
-LIBS        =        -lmingw32 -LD:\QT\5.10.1\mingw53_32\lib D:\QT\5.10.1\mingw53_32\lib\libqtmaind.a -LC:\utils\my_sql\my_sql\lib -LC:\utils\postgresql\pgsql\lib -lshell32 D:\QT\5.10.1\mingw53_32\lib\libQt5Widgetsd.a D:\QT\5.10.1\mingw53_32\lib\libQt5Guid.a D:\QT\5.10.1\mingw53_32\lib\libQt5Cored.a 
+LIBS        =        -lmingw32 -LD:\QT\5.10.1\mingw53_32\lib D:\QT\5.10.1\mingw53_32\lib\libqtmaind.a -LC:\utils\my_sql\my_sql\lib -LC:\utils\postgresql\pgsql\lib -lshell32 D:\QT\5.10.1\mingw53_32\lib\libQt5Widgetsd.a D:\QT\5.10.1\mingw53_32\lib\libQt5Guid.a D:\QT\5.10.1\mingw53_32\lib\libQt5Cored.a debug\myapp_res.o 
 QMAKE         = D:\QT\5.10.1\mingw53_32\bin\qmake.exe
 IDC           = idc
 IDL           = midl
 ZIP           = zip -r -9
 DEF_FILE      = 
-RES_FILE      = 
+RES_FILE      = debug\myapp_res.o
 COPY          = copy /y
 SED           = $(QMAKE) -install sed
 COPY_FILE     = copy /y
@@ -105,8 +105,11 @@ DESTDIR_TARGET = debug\PASMAN.exe
 first: all
 all: Makefile.Debug  $(DESTDIR_TARGET)
 
-$(DESTDIR_TARGET): ui_logininappwindow.h ui_createstoragedialog.h ui_logtostoragedialog.h ui_mainwindow.h ui_addpassdialog.h ui_generatepassdialog.h $(OBJECTS) 
+$(DESTDIR_TARGET): ui_logininappwindow.h ui_createstoragedialog.h ui_logtostoragedialog.h ui_mainwindow.h ui_addpassdialog.h ui_generatepassdialog.h $(OBJECTS) debug/myapp_res.o
 	$(LINKER) $(LFLAGS) -o $(DESTDIR_TARGET) object_script.PASMAN.Debug  $(LIBS)
+
+debug/myapp_res.o: ../PASMAN/myapp.rc
+	windres -i ..\PASMAN\myapp.rc -o debug\myapp_res.o --include-dir=./../PASMAN $(DEFINES)
 
 qmake: FORCE
 	@$(QMAKE) -o Makefile.Debug ..\PASMAN\PASMAN.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
@@ -118,6 +121,7 @@ dist:
 
 clean: compiler_clean 
 	-$(DEL_FILE) debug\main.o debug\logininappwindow.o debug\createstoragedialog.o debug\logtostoragedialog.o debug\mainwindow.o debug\addpassdialog.o debug\generatepassdialog.o debug\workwithstorage.o debug\cryptographer.o debug\workwithwinapi.o debug\moc_logininappwindow.o debug\moc_createstoragedialog.o debug\moc_logtostoragedialog.o debug\moc_mainwindow.o debug\moc_addpassdialog.o debug\moc_generatepassdialog.o
+	-$(DEL_FILE) debug\myapp_res.o
 
 distclean: clean 
 	-$(DEL_FILE) .qmake.stash
@@ -251,6 +255,23 @@ debug/moc_logininappwindow.cpp: D:/QT/5.10.1/mingw53_32/include/QtWidgets/QMainW
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qtouchdevice.h \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qtabwidget.h \
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qicon.h \
+		../PASMAN/logtostoragedialog.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QDialog \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qdialog.h \
+		../PASMAN/workwithstorage.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QString \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QFile \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QTextStream \
+		../PASMAN/cryptographer.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QMessageBox \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qmessagebox.h \
+		../PASMAN/createstoragedialog.h \
+		../PASMAN/mainwindow.h \
+		../PASMAN/workwithwinapi.h \
+		../PASMAN/addpassdialog.h \
+		../PASMAN/generatepassdialog.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QTime \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qdatetime.h \
 		../PASMAN/logininappwindow.h \
 		debug/moc_predefs.h \
 		D:/QT/5.10.1/mingw53_32/bin/moc.exe
@@ -360,6 +381,13 @@ debug/moc_createstoragedialog.cpp: D:/QT/5.10.1/mingw53_32/include/QtWidgets/QDi
 		D:/QT/5.10.1/mingw53_32/include/QtCore/qfiledevice.h \
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qvector2d.h \
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qtouchdevice.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QMessageBox \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qmessagebox.h \
+		../PASMAN/workwithstorage.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QString \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QFile \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QTextStream \
+		../PASMAN/cryptographer.h \
 		../PASMAN/createstoragedialog.h \
 		debug/moc_predefs.h \
 		D:/QT/5.10.1/mingw53_32/bin/moc.exe
@@ -469,6 +497,13 @@ debug/moc_logtostoragedialog.cpp: D:/QT/5.10.1/mingw53_32/include/QtWidgets/QDia
 		D:/QT/5.10.1/mingw53_32/include/QtCore/qfiledevice.h \
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qvector2d.h \
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qtouchdevice.h \
+		../PASMAN/workwithstorage.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QString \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QFile \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QTextStream \
+		../PASMAN/cryptographer.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QMessageBox \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qmessagebox.h \
 		../PASMAN/logtostoragedialog.h \
 		debug/moc_predefs.h \
 		D:/QT/5.10.1/mingw53_32/bin/moc.exe
@@ -580,6 +615,20 @@ debug/moc_mainwindow.cpp: D:/QT/5.10.1/mingw53_32/include/QtWidgets/QMainWindow 
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qtouchdevice.h \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qtabwidget.h \
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qicon.h \
+		../PASMAN/workwithstorage.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QString \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QFile \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QTextStream \
+		../PASMAN/cryptographer.h \
+		../PASMAN/workwithwinapi.h \
+		../PASMAN/addpassdialog.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QDialog \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qdialog.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QMessageBox \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qmessagebox.h \
+		../PASMAN/generatepassdialog.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QTime \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qdatetime.h \
 		../PASMAN/mainwindow.h \
 		debug/moc_predefs.h \
 		D:/QT/5.10.1/mingw53_32/bin/moc.exe
@@ -689,6 +738,13 @@ debug/moc_addpassdialog.cpp: D:/QT/5.10.1/mingw53_32/include/QtWidgets/QDialog \
 		D:/QT/5.10.1/mingw53_32/include/QtCore/qfiledevice.h \
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qvector2d.h \
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qtouchdevice.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QMessageBox \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qmessagebox.h \
+		../PASMAN/workwithstorage.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QString \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QFile \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QTextStream \
+		../PASMAN/cryptographer.h \
 		../PASMAN/addpassdialog.h \
 		debug/moc_predefs.h \
 		D:/QT/5.10.1/mingw53_32/bin/moc.exe
@@ -798,6 +854,12 @@ debug/moc_generatepassdialog.cpp: D:/QT/5.10.1/mingw53_32/include/QtWidgets/QDia
 		D:/QT/5.10.1/mingw53_32/include/QtCore/qfiledevice.h \
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qvector2d.h \
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qtouchdevice.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QMessageBox \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qmessagebox.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QTime \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qdatetime.h \
+		../PASMAN/workwithwinapi.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QString \
 		../PASMAN/generatepassdialog.h \
 		debug/moc_predefs.h \
 		D:/QT/5.10.1/mingw53_32/bin/moc.exe
@@ -953,6 +1015,23 @@ debug/main.o: ../PASMAN/main.cpp ../PASMAN/logininappwindow.h \
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qtouchdevice.h \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qtabwidget.h \
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qicon.h \
+		../PASMAN/logtostoragedialog.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QDialog \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qdialog.h \
+		../PASMAN/workwithstorage.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QString \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QFile \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QTextStream \
+		../PASMAN/cryptographer.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QMessageBox \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qmessagebox.h \
+		../PASMAN/createstoragedialog.h \
+		../PASMAN/mainwindow.h \
+		../PASMAN/workwithwinapi.h \
+		../PASMAN/addpassdialog.h \
+		../PASMAN/generatepassdialog.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QTime \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qdatetime.h \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QApplication \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qapplication.h \
 		D:/QT/5.10.1/mingw53_32/include/QtCore/qcoreapplication.h \
@@ -1069,6 +1148,23 @@ debug/logininappwindow.o: ../PASMAN/logininappwindow.cpp ../PASMAN/logininappwin
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qtouchdevice.h \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qtabwidget.h \
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qicon.h \
+		../PASMAN/logtostoragedialog.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QDialog \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qdialog.h \
+		../PASMAN/workwithstorage.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QString \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QFile \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QTextStream \
+		../PASMAN/cryptographer.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QMessageBox \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qmessagebox.h \
+		../PASMAN/createstoragedialog.h \
+		../PASMAN/mainwindow.h \
+		../PASMAN/workwithwinapi.h \
+		../PASMAN/addpassdialog.h \
+		../PASMAN/generatepassdialog.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QTime \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qdatetime.h \
 		ui_logininappwindow.h \
 		D:/QT/5.10.1/mingw53_32/include/QtCore/QVariant \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QAction \
@@ -1100,13 +1196,15 @@ debug/logininappwindow.o: ../PASMAN/logininappwindow.cpp ../PASMAN/logininappwin
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qstyle.h \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qtabbar.h \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qrubberband.h \
-		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QMenuBar \
-		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qmenubar.h \
-		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qmenu.h \
-		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QStatusBar \
-		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qstatusbar.h \
-		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QToolBar \
-		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qtoolbar.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QPushButton \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qpushbutton.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QSpacerItem \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qlayoutitem.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QVBoxLayout \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qboxlayout.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qlayout.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qgridlayout.h \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\logininappwindow.o ..\PASMAN\logininappwindow.cpp
 
@@ -1215,6 +1313,13 @@ debug/createstoragedialog.o: ../PASMAN/createstoragedialog.cpp ../PASMAN/creates
 		D:/QT/5.10.1/mingw53_32/include/QtCore/qfiledevice.h \
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qvector2d.h \
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qtouchdevice.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QMessageBox \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qmessagebox.h \
+		../PASMAN/workwithstorage.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QString \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QFile \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QTextStream \
+		../PASMAN/cryptographer.h \
 		ui_createstoragedialog.h \
 		D:/QT/5.10.1/mingw53_32/include/QtCore/QVariant \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QAction \
@@ -1230,8 +1335,11 @@ debug/createstoragedialog.o: ../PASMAN/createstoragedialog.cpp ../PASMAN/creates
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qinputmethod.h \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QButtonGroup \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qbuttongroup.h \
-		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QDialogButtonBox \
-		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qdialogbuttonbox.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QHBoxLayout \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qboxlayout.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qlayout.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qlayoutitem.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qgridlayout.h \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QHeaderView \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qheaderview.h \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qabstractitemview.h \
@@ -1249,7 +1357,18 @@ debug/createstoragedialog.o: ../PASMAN/createstoragedialog.cpp ../PASMAN/creates
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qstyle.h \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qtabbar.h \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qtabwidget.h \
-		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qrubberband.h
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qrubberband.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QLineEdit \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qlineedit.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qtextcursor.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qtextformat.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qpen.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qtextoption.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QPushButton \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qpushbutton.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QSpacerItem \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QVBoxLayout
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\createstoragedialog.o ..\PASMAN\createstoragedialog.cpp
 
 debug/logtostoragedialog.o: ../PASMAN/logtostoragedialog.cpp ../PASMAN/logtostoragedialog.h \
@@ -1357,6 +1476,13 @@ debug/logtostoragedialog.o: ../PASMAN/logtostoragedialog.cpp ../PASMAN/logtostor
 		D:/QT/5.10.1/mingw53_32/include/QtCore/qfiledevice.h \
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qvector2d.h \
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qtouchdevice.h \
+		../PASMAN/workwithstorage.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QString \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QFile \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QTextStream \
+		../PASMAN/cryptographer.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QMessageBox \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qmessagebox.h \
 		ui_logtostoragedialog.h \
 		D:/QT/5.10.1/mingw53_32/include/QtCore/QVariant \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QAction \
@@ -1372,8 +1498,11 @@ debug/logtostoragedialog.o: ../PASMAN/logtostoragedialog.cpp ../PASMAN/logtostor
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qinputmethod.h \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QButtonGroup \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qbuttongroup.h \
-		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QDialogButtonBox \
-		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qdialogbuttonbox.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QHBoxLayout \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qboxlayout.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qlayout.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qlayoutitem.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qgridlayout.h \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QHeaderView \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qheaderview.h \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qabstractitemview.h \
@@ -1391,7 +1520,18 @@ debug/logtostoragedialog.o: ../PASMAN/logtostoragedialog.cpp ../PASMAN/logtostor
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qstyle.h \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qtabbar.h \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qtabwidget.h \
-		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qrubberband.h
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qrubberband.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QLineEdit \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qlineedit.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qtextcursor.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qtextformat.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qpen.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qtextoption.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QPushButton \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qpushbutton.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QSpacerItem \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QVBoxLayout
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\logtostoragedialog.o ..\PASMAN\logtostoragedialog.cpp
 
 debug/mainwindow.o: ../PASMAN/mainwindow.cpp ../PASMAN/mainwindow.h \
@@ -1501,7 +1641,69 @@ debug/mainwindow.o: ../PASMAN/mainwindow.cpp ../PASMAN/mainwindow.h \
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qtouchdevice.h \
 		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qtabwidget.h \
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qicon.h \
-		ui_mainwindow.h
+		../PASMAN/workwithstorage.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QString \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QFile \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QTextStream \
+		../PASMAN/cryptographer.h \
+		../PASMAN/workwithwinapi.h \
+		../PASMAN/addpassdialog.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QDialog \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qdialog.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QMessageBox \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qmessagebox.h \
+		../PASMAN/generatepassdialog.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QTime \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qdatetime.h \
+		ui_mainwindow.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QVariant \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QAction \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qaction.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qactiongroup.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QApplication \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qapplication.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qcoreapplication.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qeventloop.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qdesktopwidget.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qguiapplication.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qinputmethod.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QButtonGroup \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qbuttongroup.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QHBoxLayout \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qboxlayout.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qlayout.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qlayoutitem.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qgridlayout.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QHeaderView \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qheaderview.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qabstractitemview.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qframe.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qabstractitemmodel.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qitemselectionmodel.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qstyleoption.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qabstractspinbox.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qvalidator.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qregularexpression.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qslider.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qabstractslider.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qstyle.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qtabbar.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qrubberband.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QMenu \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qmenu.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QMenuBar \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qmenubar.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QPushButton \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qpushbutton.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QSpacerItem \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QTableWidget \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qtablewidget.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qtableview.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QVBoxLayout \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mainwindow.o ..\PASMAN\mainwindow.cpp
 
 debug/addpassdialog.o: ../PASMAN/addpassdialog.cpp ../PASMAN/addpassdialog.h \
@@ -1609,7 +1811,64 @@ debug/addpassdialog.o: ../PASMAN/addpassdialog.cpp ../PASMAN/addpassdialog.h \
 		D:/QT/5.10.1/mingw53_32/include/QtCore/qfiledevice.h \
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qvector2d.h \
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qtouchdevice.h \
-		ui_addpassdialog.h
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QMessageBox \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qmessagebox.h \
+		../PASMAN/workwithstorage.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QString \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QFile \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QTextStream \
+		../PASMAN/cryptographer.h \
+		ui_addpassdialog.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QVariant \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QAction \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qaction.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qicon.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qactiongroup.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QApplication \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qapplication.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qcoreapplication.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qeventloop.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qdesktopwidget.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qguiapplication.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qinputmethod.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QButtonGroup \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qbuttongroup.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QHBoxLayout \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qboxlayout.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qlayout.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qlayoutitem.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qgridlayout.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QHeaderView \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qheaderview.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qabstractitemview.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qframe.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qabstractitemmodel.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qitemselectionmodel.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qstyleoption.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qabstractspinbox.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qvalidator.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qregularexpression.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qslider.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qabstractslider.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qstyle.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qtabbar.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qtabwidget.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qrubberband.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QLabel \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qlabel.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QLineEdit \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qlineedit.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qtextcursor.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qtextformat.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qpen.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qtextoption.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QPushButton \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qpushbutton.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QSpacerItem \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QVBoxLayout
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\addpassdialog.o ..\PASMAN\addpassdialog.cpp
 
 debug/generatepassdialog.o: ../PASMAN/generatepassdialog.cpp ../PASMAN/generatepassdialog.h \
@@ -1717,16 +1976,282 @@ debug/generatepassdialog.o: ../PASMAN/generatepassdialog.cpp ../PASMAN/generatep
 		D:/QT/5.10.1/mingw53_32/include/QtCore/qfiledevice.h \
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qvector2d.h \
 		D:/QT/5.10.1/mingw53_32/include/QtGui/qtouchdevice.h \
-		ui_generatepassdialog.h
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QMessageBox \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qmessagebox.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QTime \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qdatetime.h \
+		../PASMAN/workwithwinapi.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QString \
+		ui_generatepassdialog.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QVariant \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QAction \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qaction.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qicon.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qactiongroup.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QApplication \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qapplication.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qcoreapplication.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qeventloop.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qdesktopwidget.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qguiapplication.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qinputmethod.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QButtonGroup \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qbuttongroup.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QCheckBox \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qcheckbox.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QHBoxLayout \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qboxlayout.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qlayout.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qlayoutitem.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qgridlayout.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QHeaderView \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qheaderview.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qabstractitemview.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qframe.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qabstractitemmodel.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qitemselectionmodel.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qstyleoption.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qabstractspinbox.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qvalidator.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qregularexpression.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qslider.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qabstractslider.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qstyle.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qtabbar.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qtabwidget.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qrubberband.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QLabel \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qlabel.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QLineEdit \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qlineedit.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qtextcursor.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qtextformat.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qpen.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qtextoption.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QPushButton \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qpushbutton.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QSpacerItem \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QVBoxLayout \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\generatepassdialog.o ..\PASMAN\generatepassdialog.cpp
 
-debug/workwithstorage.o: ../PASMAN/workwithstorage.cpp ../PASMAN/workwithstorage.h
+debug/workwithstorage.o: ../PASMAN/workwithstorage.cpp ../PASMAN/workwithstorage.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QString \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qstring.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qchar.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qglobal.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qconfig-bootstrapped.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qconfig.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qtcore-config.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qsystemdetection.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qprocessordetection.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qcompilerdetection.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qtypeinfo.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qsysinfo.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qlogging.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qflags.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qatomic.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qbasicatomic.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qatomic_bootstrap.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qgenericatomic.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qatomic_cxx11.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qatomic_msvc.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qglobalstatic.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qmutex.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qnumeric.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qversiontagging.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qbytearray.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qrefcount.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qnamespace.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qarraydata.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qstringliteral.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qstringalgorithms.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qstringview.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qstringbuilder.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QFile \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qfile.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qfiledevice.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qiodevice.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qobject.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qobjectdefs.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qobjectdefs_impl.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qlist.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qalgorithms.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qiterator.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qhashfunctions.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qpair.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qbytearraylist.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qstringlist.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qregexp.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qstringmatcher.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qcoreevent.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qscopedpointer.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qmetatype.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qvarlengtharray.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qcontainerfwd.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qobject_impl.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QTextStream \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qtextstream.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qlocale.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qvariant.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qmap.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qdebug.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qhash.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qvector.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qpoint.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qset.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qcontiguouscache.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qsharedpointer.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qshareddata.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qsharedpointer_impl.h \
+		../PASMAN/cryptographer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\workwithstorage.o ..\PASMAN\workwithstorage.cpp
 
-debug/cryptographer.o: ../PASMAN/cryptographer.cpp ../PASMAN/cryptographer.h
+debug/cryptographer.o: ../PASMAN/cryptographer.cpp ../PASMAN/cryptographer.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QString \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qstring.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qchar.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qglobal.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qconfig-bootstrapped.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qconfig.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qtcore-config.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qsystemdetection.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qprocessordetection.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qcompilerdetection.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qtypeinfo.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qsysinfo.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qlogging.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qflags.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qatomic.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qbasicatomic.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qatomic_bootstrap.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qgenericatomic.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qatomic_cxx11.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qatomic_msvc.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qglobalstatic.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qmutex.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qnumeric.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qversiontagging.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qbytearray.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qrefcount.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qnamespace.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qarraydata.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qstringliteral.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qstringalgorithms.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qstringview.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qstringbuilder.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/QMessageBox \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qmessagebox.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qtwidgetsglobal.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qtguiglobal.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qtgui-config.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qtwidgets-config.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qdialog.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qwidget.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qwindowdefs.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qobjectdefs.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qobjectdefs_impl.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qwindowdefs_win.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qobject.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qlist.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qalgorithms.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qiterator.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qhashfunctions.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qpair.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qbytearraylist.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qstringlist.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qregexp.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qstringmatcher.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qcoreevent.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qscopedpointer.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qmetatype.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qvarlengtharray.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qcontainerfwd.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qobject_impl.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qmargins.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qpaintdevice.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qrect.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qsize.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qpoint.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qpalette.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qcolor.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qrgb.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qrgba64.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qbrush.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qvector.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qmatrix.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qpolygon.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qregion.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qdatastream.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qiodevice.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qline.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qtransform.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qpainterpath.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qimage.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qpixelformat.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qpixmap.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qsharedpointer.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qshareddata.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qhash.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qsharedpointer_impl.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qfont.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qfontmetrics.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qfontinfo.h \
+		D:/QT/5.10.1/mingw53_32/include/QtWidgets/qsizepolicy.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qcursor.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qkeysequence.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qevent.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qvariant.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qmap.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qdebug.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qtextstream.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qlocale.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qset.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qcontiguouscache.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qurl.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qurlquery.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qfile.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qfiledevice.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qvector2d.h \
+		D:/QT/5.10.1/mingw53_32/include/QtGui/qtouchdevice.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\cryptographer.o ..\PASMAN\cryptographer.cpp
 
-debug/workwithwinapi.o: ../PASMAN/workwithwinapi.cpp ../PASMAN/workwithwinapi.h
+debug/workwithwinapi.o: ../PASMAN/workwithwinapi.cpp ../PASMAN/workwithwinapi.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/QString \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qstring.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qchar.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qglobal.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qconfig-bootstrapped.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qconfig.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qtcore-config.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qsystemdetection.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qprocessordetection.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qcompilerdetection.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qtypeinfo.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qsysinfo.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qlogging.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qflags.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qatomic.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qbasicatomic.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qatomic_bootstrap.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qgenericatomic.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qatomic_cxx11.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qatomic_msvc.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qglobalstatic.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qmutex.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qnumeric.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qversiontagging.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qbytearray.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qrefcount.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qnamespace.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qarraydata.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qstringliteral.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qstringalgorithms.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qstringview.h \
+		D:/QT/5.10.1/mingw53_32/include/QtCore/qstringbuilder.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\workwithwinapi.o ..\PASMAN\workwithwinapi.cpp
 
 debug/moc_logininappwindow.o: debug/moc_logininappwindow.cpp 

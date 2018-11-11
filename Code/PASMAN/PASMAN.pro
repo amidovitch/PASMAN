@@ -53,3 +53,7 @@ FORMS += \
     mainwindow.ui \
     addpassdialog.ui \
     generatepassdialog.ui
+
+RC_FILE = myapp.rc
+
+RESOURCES +=
