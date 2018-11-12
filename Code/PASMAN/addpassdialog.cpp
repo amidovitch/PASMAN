@@ -11,27 +11,24 @@ AddPassDialog::AddPassDialog(QWidget *parent) :
     this->setFixedSize(this->size());
 }
 
-AddPassDialog::~AddPassDialog()
-{
+AddPassDialog::~AddPassDialog() {
     delete ui;
 }
 
-void AddPassDialog::on_addButton_clicked()
-{
-    if(ui->login->text().isEmpty() || ui->login->text().size() != ui->login->text().toUtf8().size()){
+void AddPassDialog::on_addButton_clicked() {
+    if(ui->login->text().isEmpty() || ui->login->text().size() != ui->login->text().toUtf8().size()) {
         ui->login->setText("");
         QMessageBox::warning(this," ", "Этот логин не подходит.");
     }
-    if(ui->password->text().isEmpty() || ui->password->text().size() != ui->password->text().toUtf8().size()){
+    if(ui->password->text().isEmpty() || ui->password->text().size() != ui->password->text().toUtf8().size()) {
         ui->password->setText("");
         QMessageBox::warning(this," ", "Этот пароль не подходит.");
     }
-    else{
-        if(WorkWithStorage::writeDataToFile(ui->login->text(), ui->password->text(),ui->note->text())){
+    else if(WorkWithStorage::writeDataToFile(ui->login->text(), ui->password->text(),ui->note->text())) {
             QMessageBox::information(this," ","Данные успешно добавлены в хранилище.");
             this->close();
         }
-        else
+        else {
             QMessageBox::critical(this, "Error", "Произошла ошибка записи. Повторите еще раз.");
     }
 }

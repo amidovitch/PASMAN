@@ -11,25 +11,22 @@ LogToStorageDialog::LogToStorageDialog(QWidget *parent) :
     this->setFixedSize(this->size());
 }
 
-LogToStorageDialog::~LogToStorageDialog()
-{
+LogToStorageDialog::~LogToStorageDialog() {
     delete ui;
 }
 
-void LogToStorageDialog::on_createButton_clicked()
-{
-    if(ui->masterLine->text() == WorkWithStorage::readMasterFromFile() && !(ui->masterLine->text().isEmpty())){
+void LogToStorageDialog::on_createButton_clicked() {
+    if(ui->masterLine->text() == WorkWithStorage::readMasterFromFile() && !(ui->masterLine->text().isEmpty())) {
          this->accept();
     }
-    else{
+    else {
         QMessageBox::critical(this,"Error", "Пароль введен неверно!");
         ui->masterLine->clear();
     }
 }
 
-void LogToStorageDialog::on_masterLine_cursorPositionChanged(int arg1, int arg2)
-{
-    if(ui->masterLine->text().startsWith("Введите свой мастер пароль")){
+void LogToStorageDialog::on_masterLine_cursorPositionChanged(int arg1, int arg2) {
+    if(ui->masterLine->text().startsWith("Введите свой мастер пароль")) {
         ui->masterLine->clear();
         ui->masterLine->setEchoMode(QLineEdit::Password);
     }

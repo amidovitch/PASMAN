@@ -8,8 +8,7 @@ namespace Ui {
 class LogToStorageDialog;
 }
 
-class LogToStorageDialog : public QDialog
-{
+class LogToStorageDialog : public QDialog {
     Q_OBJECT
 
 public:
@@ -17,13 +16,11 @@ public:
     ~LogToStorageDialog();
 
 private slots:
-
     void on_createButton_clicked();
-
     void on_masterLine_cursorPositionChanged(int arg1, int arg2);
 
 private:
     Ui::LogToStorageDialog *ui;
 };
 
-#endif // LOGTOSTORAGEDIALOG_H
+#endif

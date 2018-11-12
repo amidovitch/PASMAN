@@ -9,8 +9,7 @@ namespace Ui {
 class AddPassDialog;
 }
 
-class AddPassDialog : public QDialog
-{
+class AddPassDialog : public QDialog {
     Q_OBJECT
 
 public:
@@ -24,4 +23,4 @@ private:
     Ui::AddPassDialog *ui;
 };
 
-#endif // ADDPASSDIALOG_H
+#endif

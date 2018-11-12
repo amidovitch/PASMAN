@@ -11,29 +11,26 @@ CreateStorageDialog::CreateStorageDialog(QWidget *parent) :
     this->setFixedSize(this->size());
 }
 
-CreateStorageDialog::~CreateStorageDialog()
-{
+CreateStorageDialog::~CreateStorageDialog() {
     delete ui;
 }
 
-void CreateStorageDialog::on_createButton_clicked()
-{
+void CreateStorageDialog::on_createButton_clicked() {
     if(ui->createLine->text().isEmpty() || ui->createLine->text().size() != ui->createLine->text().toUtf8().size()){
           QMessageBox::warning(this, " ", "Этот пароль не подходит");
           ui->createLine->clear();
     }
-    else{
+    else {
         WorkWithStorage::writeMasterToFile(ui->createLine->text());
         QString message ="Ваш мастер пароль: "+ui->createLine->text()+
                 "\nЕсли вы его забудете, то потеряете доступ к своему хранилищу.";
         QMessageBox::information(this, " ", message);
         this->accept();
     }
-
 }
 
-void CreateStorageDialog::on_createLine_cursorPositionChanged(int arg1, int arg2)
-{
-    if(ui->createLine->text().startsWith( "Придумайте надежный мастер пароль"))
+void CreateStorageDialog::on_createLine_cursorPositionChanged(int arg1, int arg2) {
+    if(ui->createLine->text().startsWith( "Придумайте надежный мастер пароль")) {
         ui->createLine->clear();
+    }
 }

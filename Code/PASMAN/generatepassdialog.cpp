@@ -12,30 +12,21 @@ GeneratePassDialog::GeneratePassDialog(QWidget *parent) :
     this->setFixedSize(this->size());
 }
 
-GeneratePassDialog::~GeneratePassDialog()
-{
+GeneratePassDialog::~GeneratePassDialog() {
     delete ui;
 }
 
-bool isDec(QString str)
-{
+bool isDec(QString str) {
     int pos = 0;
-
     QRegExpValidator validator(QRegExp("[0-9]+"));
-
-    if (validator.validate(str, pos) == QValidator::Acceptable)
-        return true;
-
-    return false;
+    return validator.validate(str, pos) == QValidator::Acceptable;
 }
 
-void GeneratePassDialog::on_generateButton_clicked()
-{
+void GeneratePassDialog::on_generateButton_clicked() {
     bool ok = true;
     if(ui->lengthLine->text().isEmpty() || !(isDec(ui->lengthLine->text())) || ((!ui->digits->isChecked())
-      && !ui->spaces->isChecked()&&!ui->uppercase->isChecked() && !ui->lowercase->isChecked() &&
-      !ui->special->isChecked()) || ui->lengthLine->text().toInt(&ok, 10)>40 || ui->lengthLine->text().toInt(&ok,10)<1)
-    {
+       && !ui->spaces->isChecked()&&!ui->uppercase->isChecked() && !ui->lowercase->isChecked() &&
+       !ui->special->isChecked()) || ui->lengthLine->text().toInt(&ok, 10)>40 || ui->lengthLine->text().toInt(&ok,10)<1) {
             QMessageBox::warning(this, " ", "Введите длину от 1 до 40, и выберите необходимые опции.");
             return;
     }
@@ -43,38 +34,48 @@ void GeneratePassDialog::on_generateButton_clicked()
     qsrand(midnight.secsTo(QTime::currentTime()));
     QString pass;
 
-    for(int i = 0; i <ui->lengthLine->text().toInt(&ok, 10); i++){
+    for(int i = 0; i <ui->lengthLine->text().toInt(&ok, 10); i++) {
         switch(qrand() % 5)
         {
         case 0:
-            if(ui->digits->isChecked()){
+            if(ui->digits->isChecked()) {
                 pass.push_back(qrand() % 10 + '0');
             }
-            else i--;
+            else {
+                i--;
+            }
             break;
         case 1:
-            if(ui->uppercase->isChecked()){
+            if(ui->uppercase->isChecked()) {
                 pass.push_back(rand() % 26 + 'A');
             }
-            else i--;
+            else {
+                i--;
+            }
             break;
         case 2:
-            if(ui->lowercase->isChecked()){
+            if(ui->lowercase->isChecked()) {
                 pass.push_back(rand() % 26 + 'a');
             }
-            else i--;
+            else {
+                i--;
+            }
             break;
         case 3:
-            if(ui->spaces->isChecked()){
+            if(ui->spaces->isChecked()) {
                 pass.push_back(' ');
             }
-            else i--;
+            else {
+                i--;
+            }
             break;
         case 4:
-            if(ui->special->isChecked()){
+            if(ui->special->isChecked()) {
                  pass.push_back(rand() % 15 + '!');
             }
-            else i--;
+            else {
+                i--;
+            }
             break;
         }
     }

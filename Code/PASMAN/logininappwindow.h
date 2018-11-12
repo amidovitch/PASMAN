@@ -9,8 +9,7 @@ namespace Ui {
 class LoginInAppWindow;
 }
 
-class LoginInAppWindow : public QMainWindow
-{
+class LoginInAppWindow : public QMainWindow {
     Q_OBJECT
 
 public:
@@ -19,7 +18,6 @@ public:
 
 private slots:
     void on_loginButton_clicked();
-
     void on_createButton_clicked();
 
 private:
@@ -27,4 +25,4 @@ private:
     MainWindow window;
 };
 
-#endif // LOGININAPPWINDOW_H
+#endif

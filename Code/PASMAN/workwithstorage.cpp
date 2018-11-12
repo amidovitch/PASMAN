@@ -5,13 +5,11 @@ char* WorkWithStorage::passwordsFileName = "pass.txt";
 qint64 WorkWithStorage::currentPossition = 0;
 qint64 WorkWithStorage::startPossition = 0;
 
-QString WorkWithStorage::readMasterFromFile(){
-
+QString WorkWithStorage::readMasterFromFile() {
     QString stringFromFile;
-
     QFile fileIn(passwordsFileName);
 
-    if(fileIn.open(QIODevice::ReadOnly)){
+    if(fileIn.open(QIODevice::ReadOnly)) {
         QTextStream inStream (&fileIn);
         stringFromFile = inStream.readLine();
         startPossition = stringFromFile.length()+2;
@@ -22,23 +20,22 @@ QString WorkWithStorage::readMasterFromFile(){
 }
 
 
-void WorkWithStorage::writeMasterToFile(QString string){
+void WorkWithStorage::writeMasterToFile(QString string) {
 
     QString newString = Cryptographer::stringEncrypt(string, "Gerasim");
     QFile fileOut(passwordsFileName);
 
-    if(fileOut.open(QIODevice::WriteOnly)){
+    if(fileOut.open(QIODevice::WriteOnly)) {
         QTextStream outStream(&fileOut);
         outStream << newString << "\r\n";
         fileOut.close();
     }
 }
 
-bool WorkWithStorage::writeDataToFile(QString login, QString password, QString description){
-
+bool WorkWithStorage::writeDataToFile(QString login, QString password, QString description) {
     QString master = readMasterFromFile();
     QFile fileOut(passwordsFileName);
-    if(fileOut.open(QIODevice::Append)){
+    if(fileOut.open(QIODevice::Append)) {
         QTextStream outStream(&fileOut);
         outStream << Cryptographer::stringEncrypt(login, master)<< "\r\n"
                   << Cryptographer::stringEncrypt(password, master)<< "\r\n"
@@ -46,16 +43,16 @@ bool WorkWithStorage::writeDataToFile(QString login, QString password, QString d
         fileOut.close();
         return true;
     }
-    else return false;
+    else {
+        return false;
+    }
 }
 
-QStringList WorkWithStorage::readDataFromFile(){
-
+QStringList WorkWithStorage::readDataFromFile() {
     QStringList dataArray;
     QFile fileIn(passwordsFileName);
 
-    if(fileIn.open(QIODevice::ReadOnly)){
-
+    if(fileIn.open(QIODevice::ReadOnly)) {
         QTextStream inStream(&fileIn);
         inStream.seek(currentPossition);
 
@@ -68,7 +65,9 @@ QStringList WorkWithStorage::readDataFromFile(){
         fileIn.close();
         return dataArray;
     }
-    else return dataArray;
+    else {
+        return dataArray;
+    }
 }
 
 

@@ -9,8 +9,7 @@
 #include "iostream"
 using namespace std;
 
-class WorkWithStorage
-{
+class WorkWithStorage {
 public:
     static char* passwordsFileName;
     static qint64 currentPossition;  // Будет хранить положение курсора в файле, при считывании паролей
@@ -21,4 +20,4 @@ public:
     static QStringList readDataFromFile();
 };
 
-#endif // WORKWITHSTORAGE_H
+#endif

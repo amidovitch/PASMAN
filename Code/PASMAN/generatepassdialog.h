@@ -10,8 +10,7 @@ namespace Ui {
 class GeneratePassDialog;
 }
 
-class GeneratePassDialog : public QDialog
-{
+class GeneratePassDialog : public QDialog {
     Q_OBJECT
 
 public:
@@ -25,4 +24,4 @@ private:
     Ui::GeneratePassDialog *ui;
 };
 
-#endif // GENERATEPASSDIALOG_H
+#endif

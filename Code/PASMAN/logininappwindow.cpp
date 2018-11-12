@@ -10,30 +10,31 @@ LoginInAppWindow::LoginInAppWindow(QWidget *parent) :
     this->setFixedSize(this->size());
 }
 
-LoginInAppWindow::~LoginInAppWindow()
-{
+LoginInAppWindow::~LoginInAppWindow() {
     delete ui;
 }
 
-void LoginInAppWindow::on_loginButton_clicked()
-{
-    LogToStorageDialog  logWindow;
+void LoginInAppWindow::on_loginButton_clicked()  {
+    LogToStorageDialog logWindow;
     this->hide();
-    if(logWindow.exec() == QDialog::Accepted){
+    if(logWindow.exec() == QDialog::Accepted) {
         window.show();
         window.addInformationInTable();
         this->close();
     }
-    else this->show();
+    else {
+        this->show();
+    }
 }
 
-void LoginInAppWindow::on_createButton_clicked()
-{
+void LoginInAppWindow::on_createButton_clicked() {
     CreateStorageDialog createWindow;
     this->hide();
-    if(createWindow.exec() == QDialog::Accepted){
+    if(createWindow.exec() == QDialog::Accepted) {
         window.show();
         this->close();
     }
-    else this->show();
+    else {
+        this->show();
+    }
 }

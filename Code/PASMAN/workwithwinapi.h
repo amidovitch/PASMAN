@@ -3,11 +3,10 @@
 #include "QString"
 #include "windows.h"
 
-class WorkWithWinApi
-{
+class WorkWithWinApi {
 public:
     static void mySetClipboardData(QString);
     static void autoAuthorization(QString, QString);
 };
 
-#endif // WORKWITHWINAPI_H
+#endif

@@ -1,9 +1,7 @@
 #include "workwithwinapi.h"
 
-void WorkWithWinApi::mySetClipboardData(QString data){
-
-    if (OpenClipboard(NULL))//открываем буфер обмена
-    {
+void WorkWithWinApi::mySetClipboardData(QString data) {
+    if (OpenClipboard(NULL)) {
         HGLOBAL hgBuffer;
         char* chBuffer;
         EmptyClipboard(); //очищаем буфер
@@ -15,11 +13,8 @@ void WorkWithWinApi::mySetClipboardData(QString data){
         CloseClipboard(); //закрываем буфер обмена
     }
 }
-void WorkWithWinApi::autoAuthorization(QString password, QString login ){
-
+void WorkWithWinApi::autoAuthorization(QString password, QString login) {
     ShowWindow(GetForegroundWindow(), SW_MINIMIZE);
-
-   // const char* charPassword = password.toStdString().c_str();
     const char* charPassword = password.toLocal8Bit().data();
     INPUT pInput;
     wchar_t wc;
@@ -35,6 +30,6 @@ void WorkWithWinApi::autoAuthorization(QString password, QString login ){
         SendInput(1, &pInput, sizeof(pInput));
      }
     mySetClipboardData(login);
-  }
+}
 
 
